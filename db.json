@@ -1,0 +1,185 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "product_name": "Wireless Bluetooth Headphones",
+      "sku": "WBH-1001",
+      "price": 2499,
+      "description": "Over-ear wireless headphones with active noise cancellation and 30-hour battery life.",
+      "brand": "SoundWave",
+      "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop"
+    },
+    {
+      "id": 2,
+      "product_name": "Stainless Steel Water Bottle",
+      "sku": "SSWB-2002",
+      "price": 799,
+      "description": "Insulated 750ml bottle that keeps drinks cold for 24 hours or hot for 12.",
+      "brand": "HydroFlask",
+      "image": "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=400&h=400&fit=crop"
+    },
+    {
+      "id": 3,
+      "product_name": "Running Shoes",
+      "sku": "RS-3003",
+      "price": 3999,
+      "description": "Lightweight running shoes with breathable mesh upper and cushioned sole.",
+      "brand": "Stridewell",
+      "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop"
+    },
+    {
+      "id": 4,
+      "product_name": "Smart Fitness Watch",
+      "sku": "SFW-4004",
+      "price": 5999,
+      "description": "Track heart rate, sleep and workouts with a 7-day battery and AMOLED display.",
+      "brand": "PulseTech",
+      "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop"
+    },
+    {
+      "id": 5,
+      "product_name": "Ceramic Coffee Mug Set",
+      "sku": "CCMS-5005",
+      "price": 1299,
+      "description": "Set of 4 handcrafted ceramic mugs, microwave and dishwasher safe.",
+      "brand": "HomeCraft",
+      "image": "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=400&h=400&fit=crop"
+    },
+    {
+      "id": 6,
+      "product_name": "Leather Laptop Backpack",
+      "sku": "LLB-6006",
+      "price": 3499,
+      "description": "Water-resistant backpack with padded compartment, fits laptops up to 15.6 inches.",
+      "brand": "Urbanpack",
+      "image": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop"
+    },
+    {
+      "id": 7,
+      "product_name": "Yoga Mat",
+      "sku": "YM-7007",
+      "price": 1499,
+      "description": "Extra-thick non-slip yoga mat with carrying strap and 6mm cushioning.",
+      "brand": "ZenFit",
+      "image": "https://images.unsplash.com/photo-1592432678016-e910b452f9a2?w=400&h=400&fit=crop"
+    },
+    {
+      "id": 8,
+      "product_name": "Mechanical Keyboard",
+      "sku": "MK-8008",
+      "price": 4599,
+      "description": "RGB backlit mechanical keyboard with blue switches for tactile typing feedback.",
+      "brand": "KeyForge",
+      "image": "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400&h=400&fit=crop"
+    },
+    {
+      "id": 9,
+      "product_name": "Polarized Sunglasses",
+      "sku": "SG-9009",
+      "price": 1899,
+      "description": "Polarized UV400 protection sunglasses with lightweight aluminium frame.",
+      "brand": "SunShield",
+      "image": "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&h=400&fit=crop"
+    },
+    {
+      "id": 10,
+      "product_name": "Portable Bluetooth Speaker",
+      "sku": "PBS-1010",
+      "price": 2199,
+      "description": "Compact waterproof speaker with 12-hour playtime and deep bass.",
+      "brand": "SoundWave",
+      "image": "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400&h=400&fit=crop"
+    },
+    {
+      "id": 11,
+      "product_name": "Cotton Bath Towel Set",
+      "sku": "CBTS-1111",
+      "price": 1699,
+      "description": "Set of 6 ultra-soft 100% cotton towels, highly absorbent and quick-drying.",
+      "brand": "HomeCraft",
+      "image": "https://images.unsplash.com/photo-1583845112203-29329902332e?w=400&h=400&fit=crop"
+    },
+    {
+      "id": 12,
+      "product_name": "LED Desk Lamp",
+      "sku": "DLUP-1212",
+      "price": 1299,
+      "description": "Adjustable LED desk lamp with 3 brightness levels and built-in USB charging port.",
+      "brand": "BrightDesk",
+      "image": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=400&h=400&fit=crop"
+    },
+    {
+      "id": 13,
+      "product_name": "Stainless Steel Chef Knife",
+      "sku": "SSCK-1313",
+      "price": 2299,
+      "description": "8-inch professional chef knife with ergonomic handle and razor-sharp edge.",
+      "brand": "ChefPro",
+      "image": "https://images.unsplash.com/photo-1593618998160-e34014e67546?w=400&h=400&fit=crop"
+    },
+    {
+      "id": 14,
+      "product_name": "Wireless Charging Pad",
+      "sku": "WCP-1414",
+      "price": 999,
+      "description": "Fast wireless charger compatible with all Qi-enabled smartphones.",
+      "brand": "PulseTech",
+      "image": "https://images.unsplash.com/photo-1591290619762-d2c8e8c08c84?w=400&h=400&fit=crop"
+    },
+    {
+      "id": 15,
+      "product_name": "Canvas Tote Bag",
+      "sku": "CTB-1515",
+      "price": 849,
+      "description": "Durable heavyweight canvas tote bag, perfect for groceries or daily use.",
+      "brand": "Urbanpack",
+      "image": "https://images.unsplash.com/photo-1591561954557-26941169b49e?w=400&h=400&fit=crop"
+    },
+    {
+      "id": 16,
+      "product_name": "Electric Kettle",
+      "sku": "EK-1616",
+      "price": 1599,
+      "description": "1.7L stainless steel electric kettle with auto shut-off and boil-dry protection.",
+      "brand": "HomeCraft",
+      "image": "https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?w=400&h=400&fit=crop"
+    },
+    {
+      "id": 17,
+      "product_name": "Resistance Bands Set",
+      "sku": "RBS-1717",
+      "price": 999,
+      "description": "Set of 5 resistance bands with varying tension levels for home workouts.",
+      "brand": "ZenFit",
+      "image": "https://images.unsplash.com/photo-1598971639058-a4135f43d2d8?w=400&h=400&fit=crop"
+    },
+    {
+      "id": 18,
+      "product_name": "Ergonomic Wireless Mouse",
+      "sku": "WM-1818",
+      "price": 899,
+      "description": "Ergonomic wireless mouse with adjustable DPI and silent click buttons.",
+      "brand": "KeyForge",
+      "image": "https://images.unsplash.com/photo-1527814050087-3793815479db?w=400&h=400&fit=crop"
+    },
+    {
+      "id": 19,
+      "product_name": "Aviator Sunglasses",
+      "sku": "AS-1919",
+      "price": 1999,
+      "description": "Classic aviator-style sunglasses with mirrored polarized lenses.",
+      "brand": "SunShield",
+      "image": "https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?w=400&h=400&fit=crop"
+    },
+    {
+      "id": 20,
+      "product_name": "Portable Power Bank",
+      "sku": "PPB-2020",
+      "price": 1799,
+      "description": "20000mAh power bank with fast charging and dual USB output ports.",
+      "brand": "PulseTech",
+      "image": "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=400&h=400&fit=crop"
+    }
+  ],
+  "contacts": []
+}
