@@ -144,14 +144,9 @@ This creates an optimized production build in the `build/` directory.
 
 ## 📞 Support & Contact
 
-For support, feedback, or inquiries, please visit our Contact Us page or email support@shopsphere.com
-
-## 📄 License
-
-MIT License - This project is licensed under the MIT License.
+  MailId: jsabishek236@gmail.com
 
 ---
 
 **Version:** 1.0.0  
-**Last Updated:** June 2026  
-**Maintained By:** Development Team
+
