@@ -2,13 +2,6 @@ import React from 'react';
 import './StaticPage.css';
 
 function About() {
-  const milestones = [
-    { year: '2022', title: 'Company Founded', desc: 'ShopSphere was launched in a small garage in Tech City with just 10 products.' },
-    { year: '2023', title: 'Series A Funding', desc: 'Secured $5M in Series A funding to expand warehouse capacities and distribution.' },
-    { year: '2024', title: '1 Million Customers', desc: 'Reached our milestone of serving over one million active customers worldwide.' },
-    { year: '2026', title: 'ShopSphere Premium', desc: 'Launched ShopSphere Prime Mock to simulate rapid, same-day delivery service.' }
-  ];
-
   return (
     <div className="about-page-wrapper">
       <h2>About ShopSphere</h2>
@@ -47,22 +40,6 @@ function About() {
           <p>
             We strive to provide our customers with high-quality services, frictionless search tools, responsive support, and security safeguards to ensure every purchase is a delightful experience.
           </p>
-        </div>
-      </section>
-
-      {/* Timeline Section */}
-      <section className="about-timeline-section">
-        <h3>Our Journey</h3>
-        <div className="timeline-trail">
-          {milestones.map((m, idx) => (
-            <div className="timeline-node" key={idx}>
-              <div className="timeline-node__year">{m.year}</div>
-              <div className="timeline-node__content">
-                <h4>{m.title}</h4>
-                <p>{m.desc}</p>
-              </div>
-            </div>
-          ))}
         </div>
       </section>
 

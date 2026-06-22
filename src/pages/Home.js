@@ -163,8 +163,7 @@ function Home() {
           <div className="footer-column">
             <h4>About ShopSphere</h4>
             <a href="http://localhost:3000/about">Who We Are</a>
-            <a href="http://localhost:3000/press">Press Releases</a>
-            <a href="http://localhost:3000/careers">Careers</a>
+            <a href="http://localhost:3000/about">Careers</a>
           </div>
           <div className="footer-column">
             <h4>Assistance</h4>
