@@ -108,39 +108,20 @@ This creates an optimized production build in the `build/` directory.
 - ✅ Responsive design
 - ✅ Home page with hero section
 
-### Phase 2 (Coming Soon)
-- 🔜 Product API integration
-- 🔜 Product listing and filtering
-- 🔜 Product detail pages
-- 🔜 Shopping cart functionality
+### Phase 2 (Completed)
+- 🔜Created json mock api to list products with following params
+  -product_name,
+  -sku,
+  -price,
+  -description,
+  -brand
+- 🔜Contact us details added json api
 
 ### Phase 3 (Coming Soon)
-- 🔜 User authentication
-- 🔜 Checkout process
-- 🔜 Payment integration
-- 🔜 Order tracking
-
-### Phase 4 (Coming Soon)
-- 🔜 Admin dashboard
-- 🔜 Inventory management
-- 🔜 Analytics and reporting
-- 🔜 Advanced features
-
-## 📱 Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-- Mobile browsers (iOS Safari, Chrome Mobile)
-
-## 🔒 Security Features
-
-- HTTPS ready
-- CSRF protection (when backend is implemented)
-- XSS prevention
-- Secure payment processing (future)
-- Data encryption (future)
+- 🔜Design the following pages with bootstrap or material UI
+   - Shop page with listing of pages with pagination and add to cart button
+   - User clicks on add to cart it will add to the cart, using react context or react redux
+   - User click on view cart , will redirect to cart page with addtion or subtraction of quantities with total summary
 
 ## 📞 Support & Contact
 
