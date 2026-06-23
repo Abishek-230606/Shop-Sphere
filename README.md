@@ -74,6 +74,10 @@ shopsphere/
 
    The application will automatically launch in your default browser at `http://localhost:3000`.
 
+   There are 2 servers running backend for this project
+    -1 -> db.json this is connected via  http://localhost:5000
+    -2 -> customerdb.json this is connected via  http://localhost:5001
+
 ## 📜 Available Scripts
 
 | Script | Description |
@@ -90,7 +94,7 @@ shopsphere/
 | **Home** | Premium landing page featuring dynamic carousels, custom trust indicators, and category cards. | ✅ Live |
 | **Shop** | Real-time mock API integration loading products with interactive search filters and cards. | ✅ Live |
 | **About** | Company profile, core values, statistics, and organizational history timeline. | ✅ Live |
-| **Contact** | Support contact information and FAQs. | 🔜 Coming Soon |
+| **Contact** | Support contact information and FAQs. | ✅ Live |
 | **Cart** | Cart management page displaying items, subtotals, and custom checkout flows. | ✅ Live |
 
 ## 🔄 Roadmap
@@ -116,8 +120,8 @@ brand
    - User clicks on add to cart it will add to the cart, using react context or react redux
    - User click on view cart , will redirect to cart page with addtion or subtraction of quantities with total summary
 
-### Phase 4 (Coming Soon)
-- 🔜Design contact us page with following input fields with proper   validation and save as json data using axios or fetch
+### Phase 4 (Completed)
+- ✅Design contact us page with following input fields with proper   validation and save as json data using axios or fetch
  - 1)Name 
  - 2)Email 
  - 3)Phone
@@ -137,4 +141,4 @@ brand
 
 ---
 
-**Version**: 3.0.0
+**Version**: 4.0.0
