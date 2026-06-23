@@ -1,8 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../features/cart/cartslice';
 import './productcard.css';
 
-function ProductCard({ product, onAddToCart }) {
+function ProductCard({ product }) {
+  const dispatch = useDispatch();
+  const [added, setAdded] = useState(false);
+
+  function handleAddToCart() {
+    dispatch(addToCart(product));
+    setAdded(true);
+    // Auto-dismiss the popup/toast after 2 seconds
+    const timer = setTimeout(() => {
+      setAdded(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }
+
   return (
     <div className="product-card">
       <div className="product-card__image-wrapper">
@@ -23,13 +38,21 @@ function ProductCard({ product, onAddToCart }) {
             ₹{product.price.toLocaleString('en-IN')}
           </span>
           <button
-            className="product-card__cart-btn"
-            onClick={() => onAddToCart && onAddToCart(product)}
+            className={`product-card__cart-btn ${added ? 'added' : ''}`}
+            onClick={handleAddToCart}
           >
-            🛒 Add to Cart
+            {added ? '✓ Added' : '🛒 Add to Cart'}
           </button>
         </div>
       </div>
+      {added && (
+        <div className="cart-toast">
+          <span className="cart-toast__icon">✅</span>
+          <span className="cart-toast__message">
+            Added <strong>{product.product_name}</strong> to cart!
+          </span>
+        </div>
+      )}
     </div>
   );
 }
@@ -44,11 +67,6 @@ ProductCard.propTypes = {
     brand: PropTypes.string.isRequired,
     image: PropTypes.string,
   }).isRequired,
-  onAddToCart: PropTypes.func,
-};
-
-ProductCard.defaultProps = {
-  onAddToCart: null,
 };
 
 export default ProductCard;
