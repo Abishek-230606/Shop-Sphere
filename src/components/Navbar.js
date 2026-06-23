@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import './Navbar.css';
 
-function Navbar({ cartCount = 0 }) {
+function Navbar() {
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
+  const cartCount = useSelector((state) =>
+    state.cart.items.reduce((total, item) => total + item.quantity, 0)
+  );
 
   function handleSearch(e) {
     e.preventDefault();
@@ -13,6 +17,11 @@ function Navbar({ cartCount = 0 }) {
     } else {
       navigate('/shop');
     }
+  }
+
+  function handleClearSearch() {
+    setSearchTerm('');
+    navigate('/shop');
   }
 
   return (
@@ -25,21 +34,13 @@ function Navbar({ cartCount = 0 }) {
           <NavLink to="/" className="site-navbar__brand">
             <span className="brand-shop">Shop</span>
             <span className="brand-sphere">Sphere</span>
-            <span className="brand-dot">.</span>
+            <span className="brand-dot">.com</span>
           </NavLink>
 
-          {/* Deliver to */}
-          <div className="site-navbar__deliver">
-            <span className="deliver-icon">📍</span>
-            <div>
-              <span className="deliver-top">Deliver to</span>
-              <span className="deliver-bottom">India</span>
-            </div>
-          </div>
 
           {/* Search */}
           <form className="site-navbar__search" onSubmit={handleSearch}>
-            <div className="search-inner" style={{ position: 'relative' }}>
+            <div className="search-inner">
               <input
                 type="text"
                 className="search-input"
@@ -47,32 +48,13 @@ function Navbar({ cartCount = 0 }) {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 aria-label="Search products"
-                style={{ paddingRight: '2.5rem' }}
               />
               {searchTerm && (
                 <button
                   type="button"
-                  onClick={() => {
-                    setSearchTerm('');
-                    navigate('/shop');
-                  }}
                   className="search-clear-btn"
+                  onClick={handleClearSearch}
                   aria-label="Clear search"
-                  style={{
-                    position: 'absolute',
-                    right: '4.50rem',
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    background: 'none',
-                    border: 'none',
-                    fontSize: '0.95rem',
-                    color: 'var(--text-muted)',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '0.2rem'
-                  }}
                 >
                   ✕
                 </button>
@@ -85,14 +67,6 @@ function Navbar({ cartCount = 0 }) {
 
           {/* Right actions */}
           <div className="site-navbar__actions">
-            <div className="nav-action">
-              <span className="nav-action__top">Hello, Sign in</span>
-              <span className="nav-action__bottom">Account &amp; Lists ▾</span>
-            </div>
-            <div className="nav-action">
-              <span className="nav-action__top">Returns</span>
-              <span className="nav-action__bottom">&amp; Orders</span>
-            </div>
             <NavLink to="/cart" className="mini-cart" aria-label="View cart">
               <span className="mini-cart__icon">🛒</span>
               <span className="mini-cart__count">{cartCount}</span>
@@ -103,20 +77,10 @@ function Navbar({ cartCount = 0 }) {
         </div>
       </div>
 
-      {/* Bottom nav bar */}
+      {/* Bottom nav */}
       <div className="site-navbar__bottom">
         <div className="site-navbar__bottom-inner">
           <ul className="site-navbar__links">
-            <li>
-              <NavLink
-                to="/shop"
-                className={({ isActive }) =>
-                  isActive ? 'site-navbar__link active' : 'site-navbar__link'
-                }
-              >
-                ☰ All
-              </NavLink>
-            </li>
             <li>
               <NavLink
                 to="/shop"

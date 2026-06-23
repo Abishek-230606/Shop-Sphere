@@ -64,6 +64,36 @@ function About() {
           </div>
         </div>
       </section>
+
+      {/* Satisfied Customers & Vendor Reviews */}
+      <section className="about-reviews-section">
+        <h3>What Our Partners & Customers Say</h3>
+        <p className="section-subtitle">Real reviews from our satisfied shoppers and vendors worldwide.</p>
+        
+        <div className="reviews-grid">
+          <div className="review-card">
+            <div className="review-rating">⭐⭐⭐⭐⭐</div>
+            <p className="review-text">
+              &quot;ShopSphere has completely changed how we procure products. The shipping is lightning fast and the customer support is top-notch!&quot;
+            </p>
+            <div className="review-author">— Ananya Sharma, Satisfied Customer</div>
+          </div>
+          <div className="review-card">
+            <div className="review-rating">⭐⭐⭐⭐⭐</div>
+            <p className="review-text">
+              &quot;As a vendor, selling on ShopSphere has been incredibly smooth. The merchant support team and payment clearances are always on time.&quot;
+            </p>
+            <div className="review-author">— Rajesh Patel, Gold Partner Vendor</div>
+          </div>
+          <div className="review-card">
+            <div className="review-rating">⭐⭐⭐⭐⭐</div>
+            <p className="review-text">
+              &quot;Excellent product quality! I ordered a mechanical keyboard and it was delivered within 2 days in mint condition. 10/10 recommended.&quot;
+            </p>
+            <div className="review-author">— David Miller, Tech Enthusiast</div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
