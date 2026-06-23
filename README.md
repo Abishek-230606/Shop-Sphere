@@ -107,11 +107,24 @@ shopsphere/
 
 ### Phase 2 (Completed)
 - ✅Created json mock api to list products with following params
-product_name,
-sku,
-price,
-description,
-brand
+  -product_name,
+  -sku,
+  -price,
+  -description,
+  -brand
+- ✅Contact us details added json api
+
+### Phase 3 (Coming Soon)
+- ✅Design the following pages with bootstrap or material UI
+   - Shop page with listing of pages with pagination and add to cart button
+   - User clicks on add to cart it will add to the cart, using react context or react redux
+   - User click on view cart , will redirect to cart page with addtion or subtraction of quantities with total summary
+- ✅Created json mock api to list products with following params
+    -product_name,
+    -sku,
+    -price,
+    -description,
+    -brand
 - ✅Contact us details added json api
 
 ### Phase 3 (Completed)
@@ -120,8 +133,8 @@ brand
    - User clicks on add to cart it will add to the cart, using react context or react redux
    - User click on view cart , will redirect to cart page with addtion or subtraction of quantities with total summary
 
-### Phase 4 (Completed)
-- ✅Design contact us page with following input fields with proper   validation and save as json data using axios or fetch
+### Phase 4 (Coming Soon)
+- ✅Design contact us page with following input fields with proper validation and save as json data using axios or fetch
  - 1)Name 
  - 2)Email 
  - 3)Phone
