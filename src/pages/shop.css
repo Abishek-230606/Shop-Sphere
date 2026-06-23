@@ -16,7 +16,7 @@
 .shop-page__header-label {
   font-size: 0.8rem;
   font-weight: 700;
-  color: var(--accent-gold); /* Gold brand accent (#dfb05d) */
+  color: var(--accent-gold);
   text-transform: uppercase;
   letter-spacing: 0.15em;
   margin: 0 0 0.5rem;
@@ -33,12 +33,10 @@
 .shop-page__subtitle {
   font-size: 1.05rem;
   color: #e2e8f0;
-  margin: 0;
-  max-width: 700px;
   margin: 0 auto;
+  max-width: 700px;
 }
 
-/* Toolbar — result count + search tag */
 .shop-page__toolbar {
   display: flex;
   align-items: center;
@@ -52,7 +50,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  background-color: rgba(223, 176, 93, 0.1); /* Subtle, premium gold highlight background */
+  background-color: rgba(223, 176, 93, 0.1);
   border: 1px solid var(--accent-gold);
   border-radius: 999px;
   padding: 0.35rem 0.9rem;
@@ -71,7 +69,6 @@
   font-weight: 500;
 }
 
-/* States */
 .shop-page__status,
 .shop-page__error,
 .shop-page__empty {
@@ -108,7 +105,6 @@
   box-shadow: 0 4px 8px rgba(223, 176, 93, 0.2);
 }
 
-/* Spinner */
 .shop-spinner {
   width: 40px;
   height: 40px;
@@ -119,16 +115,51 @@
 }
 
 @keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+  to { transform: rotate(360deg); }
 }
 
-/* Product grid */
 .shop-page__grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+/* Bootstrap pagination overrides */
+.shop-page__pagination {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.shop-page__page-info {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+}
+
+.pagination .page-link {
+  color: var(--text-main);
+  border-color: var(--border-color);
+  font-weight: 500;
+  padding: 0.5rem 0.9rem;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.pagination .page-link:hover {
+  background-color: var(--accent-gold);
+  border-color: var(--accent-gold);
+  color: var(--primary-brand);
+}
+
+.pagination .page-item.active .page-link {
+  background-color: var(--accent-gold);
+  border-color: var(--accent-gold);
+  color: var(--primary-brand);
+  font-weight: 700;
+}
+
+.pagination .page-item.disabled .page-link {
+  color: var(--text-muted);
 }
 
 @media (max-width: 600px) {
