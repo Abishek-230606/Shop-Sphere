@@ -2,13 +2,6 @@ import React from 'react';
 import './StaticPage.css';
 
 function About() {
-  const milestones = [
-    { year: '2022', title: 'Company Founded', desc: 'ShopSphere was launched in a small garage in Tech City with just 10 products.' },
-    { year: '2023', title: 'Series A Funding', desc: 'Secured $5M in Series A funding to expand warehouse capacities and distribution.' },
-    { year: '2024', title: '1 Million Customers', desc: 'Reached our milestone of serving over one million active customers worldwide.' },
-    { year: '2026', title: 'ShopSphere Premium', desc: 'Launched ShopSphere Prime Mock to simulate rapid, same-day delivery service.' }
-  ];
-
   return (
     <div className="about-page-wrapper">
       <h2>About ShopSphere</h2>
@@ -50,22 +43,6 @@ function About() {
         </div>
       </section>
 
-      {/* Timeline Section */}
-      <section className="about-timeline-section">
-        <h3>Our Journey</h3>
-        <div className="timeline-trail">
-          {milestones.map((m, idx) => (
-            <div className="timeline-node" key={idx}>
-              <div className="timeline-node__year">{m.year}</div>
-              <div className="timeline-node__content">
-                <h4>{m.title}</h4>
-                <p>{m.desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* Values Section */}
       <section className="about-values-section">
         <h3>Our Core Values</h3>
@@ -84,6 +61,36 @@ function About() {
             <span className="value-icon">💡</span>
             <h4>Innovate Daily</h4>
             <p>We constantly seek improvements in our search tools, grids, and user interfaces.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Satisfied Customers & Vendor Reviews */}
+      <section className="about-reviews-section">
+        <h3>What Our Partners & Customers Say</h3>
+        <p className="section-subtitle">Real reviews from our satisfied shoppers and vendors worldwide.</p>
+        
+        <div className="reviews-grid">
+          <div className="review-card">
+            <div className="review-rating">⭐⭐⭐⭐⭐</div>
+            <p className="review-text">
+              &quot;ShopSphere has completely changed how we procure products. The shipping is lightning fast and the customer support is top-notch!&quot;
+            </p>
+            <div className="review-author">— Ananya Sharma, Satisfied Customer</div>
+          </div>
+          <div className="review-card">
+            <div className="review-rating">⭐⭐⭐⭐⭐</div>
+            <p className="review-text">
+              &quot;As a vendor, selling on ShopSphere has been incredibly smooth. The merchant support team and payment clearances are always on time.&quot;
+            </p>
+            <div className="review-author">— Rajesh Patel, Gold Partner Vendor</div>
+          </div>
+          <div className="review-card">
+            <div className="review-rating">⭐⭐⭐⭐⭐</div>
+            <p className="review-text">
+              &quot;Excellent product quality! I ordered a mechanical keyboard and it was delivered within 2 days in mint condition. 10/10 recommended.&quot;
+            </p>
+            <div className="review-author">— David Miller, Tech Enthusiast</div>
           </div>
         </div>
       </section>
