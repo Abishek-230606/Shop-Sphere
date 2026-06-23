@@ -89,10 +89,9 @@ shopsphere/
 |------|-------------|--------|
 | **Home** | Premium landing page featuring dynamic carousels, custom trust indicators, and category cards. | ✅ Live |
 | **Shop** | Real-time mock API integration loading products with interactive search filters and cards. | ✅ Live |
-| **Returns & Orders** | Dashboard showing returns status, order records, and tracking history. | 🔜 Coming Soon |
 | **About** | Company profile, core values, statistics, and organizational history timeline. | ✅ Live |
 | **Contact** | Support contact information and FAQs. | 🔜 Coming Soon |
-| **Cart** | Cart management page displaying items, subtotals, and custom checkout flows. | 🔜 Coming Soon |
+| **Cart** | Cart management page displaying items, subtotals, and custom checkout flows. | ✅ Live |
 
 ## 🔄 Roadmap
 
@@ -111,8 +110,8 @@ description,
 brand
 - ✅Contact us details added json api
 
-### Phase 3 (Coming Soon)
-- 🔜Design the following pages with bootstrap or material UI
+### Phase 3 (Completed)
+- ✅Design the following pages with bootstrap or material UI
    - Shop page with listing of pages with pagination and add to cart button
    - User clicks on add to cart it will add to the cart, using react context or react redux
    - User click on view cart , will redirect to cart page with addtion or subtraction of quantities with total summary
@@ -138,4 +137,4 @@ brand
 
 ---
 
-**Version**: 2.0.0
+**Version**: 3.0.0
