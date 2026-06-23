@@ -88,7 +88,9 @@
 /* Search */
 .site-navbar__search {
   flex: 1;
+  max-width: 500px;
   min-width: 0;
+  margin: 0 auto;
 }
 
 .search-inner {
@@ -114,6 +116,23 @@
   color: var(--text-main);
   background-color: #ffffff;
   min-width: 0;
+}
+
+.search-clear-btn {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--transition-fast);
+}
+
+.search-clear-btn:hover {
+  color: var(--text-main);
 }
 
 .search-btn {

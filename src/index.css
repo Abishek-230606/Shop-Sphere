@@ -1,16 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
 :root {
-  --primary-brand: #111625;
-  --accent-gold: #dfb05d;
-  --accent-gold-dark: #c69843;
-  --site-bg: #f4f6f8;
+  --primary-brand: #0f141e;
+  --accent-gold: #e5b869;
+  --accent-gold-dark: #cba052;
+  --site-bg: #f8fafc;
   --card-bg: #ffffff;
-  --text-main: #1e2229;
-  --text-muted: #687182;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
   --border-color: #e2e8f0;
-  --rating-color: #ffa41c;
-  --border-radius: 6px;
-  --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --rating-color: #f59e0b;
+  --border-radius: 12px;
+  --transition-fast: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   --max-width: 1400px;
+  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 12px 30px rgba(15, 23, 42, 0.06);
 }
 
 * {
@@ -20,7 +24,7 @@
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   color: var(--text-main);
   background-color: var(--site-bg);
   -webkit-font-smoothing: antialiased;

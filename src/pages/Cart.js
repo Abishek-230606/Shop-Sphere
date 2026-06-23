@@ -1,167 +1,174 @@
-import React, { useState } from 'react';
-import './StaticPage.css';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import {
+  increaseQuantity,
+  decreaseQuantity,
+  removeFromCart,
+  clearCart,
+} from '../features/cart/cartslice';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './Cart.css';
 
 function Cart() {
-  // Mock cart items matching Navbar's preview list
-  const [cartItems, setCartItems] = useState([]);
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.items);
 
-  const [promoCode, setPromoCode] = useState('');
-  const [discount, setDiscount] = useState(0);
-  const [promoMessage, setPromoMessage] = useState('');
+  const subtotal = cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
+  const totalItems = cartItems.reduce(
+    (sum, item) => sum + item.quantity,
+    0
+  );
 
-  const updateQty = (id, newQty) => {
-    if (newQty < 1) return;
-    setCartItems(prev => prev.map(item => item.id === id ? { ...item, quantity: newQty } : item));
-  };
+  function handleCheckout() {
+    alert(
+      `✅ Order placed successfully!\n\nThank you for shopping with ShopSphere.\nYour order of ₹${subtotal.toLocaleString('en-IN')} will be delivered soon.`
+    );
+    dispatch(clearCart());
+  }
 
-  const removeItem = (id) => {
-    setCartItems(prev => prev.filter(item => item.id !== id));
-  };
-
-  const applyPromo = (e) => {
-    e.preventDefault();
-    if (promoCode.trim().toUpperCase() === 'SHOPSPHERE10') {
-      setDiscount(0.10);
-      setPromoMessage('Promo code SHOPSPHERE10 applied! 10% discount subtracted.');
-    } else {
-      setPromoMessage('Invalid promo code. Try "SHOPSPHERE10".');
-    }
-  };
-
-  const itemCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
-  const rawSubtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  const discountAmount = rawSubtotal * discount;
-  const finalSubtotal = (rawSubtotal - discountAmount).toFixed(2);
-  const freeShippingLimit = 100;
-  const progressPercent = Math.min((rawSubtotal / freeShippingLimit) * 100, 100);
+  if (cartItems.length === 0) {
+    return (
+      <div className="cart-empty">
+        <div className="cart-empty__icon">🛒</div>
+        <h2>Your Cart is Empty</h2>
+        <p>Looks like you haven't added anything yet.</p>
+        <Link to="/shop" className="cart-empty__btn">
+          Start Shopping
+        </Link>
+      </div>
+    );
+  }
 
   return (
-    <div className="cart-page-wrapper">
-      <div className="cart-content-layout">
-        
-        {/* Left Column: Cart Items List */}
-        <main className="cart-main-section">
-          <div className="cart-header">
-            <h2>Shopping Cart</h2>
-            <span className="cart-price-header">Price</span>
-          </div>
+    <div className="cart-page">
+      <div className="cart-page__inner">
 
-          {cartItems.length === 0 ? (
-            <div className="empty-cart-view">
-              <h3>Your ShopSphere Cart is empty.</h3>
-              <p>Your Shopping Cart lives to serve. Give it purpose — fill it with electronics, clothing, books, and more.</p>
-              <a href="/shop" className="btn-amazon-primary shop-cta-empty">Continue Shopping</a>
-            </div>
-          ) : (
-            <div className="cart-items-list">
-              {cartItems.map((item) => (
-                <div className="cart-item-row" key={item.id}>
-                  <div className="cart-item-row__img-col">
-                    <img src={item.image} alt={item.title} />
-                  </div>
-                  
-                  <div className="cart-item-row__desc-col">
-                    <h3 className="cart-item-title">{item.title}</h3>
-                    <p className="stock-status">{item.stock}</p>
-                    
-                    {item.isPrime && (
-                      <span className="prime-badge-small">
-                        <span className="prime-text">✓</span>prime
-                      </span>
-                    )}
+        {/* Header */}
+        <div className="cart-page__header">
+          <h1>
+            🛒 Your Cart{' '}
+            <span className="cart-page__count">
+              {totalItems} {totalItems === 1 ? 'item' : 'items'}
+            </span>
+          </h1>
+        </div>
 
-                    <div className="cart-item-actions">
-                      <div className="qty-selector-wrapper">
-                        <label htmlFor={`qty-${item.id}`}>Qty: </label>
-                        <select 
-                          id={`qty-${item.id}`}
-                          value={item.quantity}
-                          onChange={(e) => updateQty(item.id, parseInt(e.target.value))}
+        <div className="cart-page__body">
+          {/* Cart Items */}
+          <div className="cart-items">
+            {cartItems.map((item) => (
+              <div key={item.id} className="cart-item card mb-3">
+                <div className="card-body">
+                  <div className="cart-item__inner">
+                    {/* Image */}
+                    <div className="cart-item__image-wrap">
+                      <img
+                        src={item.image}
+                        alt={item.product_name}
+                        className="cart-item__image"
+                      />
+                    </div>
+
+                    {/* Details */}
+                    <div className="cart-item__details">
+                      <span className="cart-item__brand">{item.brand}</span>
+                      <h3 className="cart-item__name">{item.product_name}</h3>
+                      <p className="cart-item__sku">SKU: {item.sku}</p>
+                      <p className="cart-item__unit-price">
+                        ₹{item.price.toLocaleString('en-IN')} per item
+                      </p>
+
+                      {/* Quantity controls */}
+                      <div className="cart-item__controls">
+                        <div className="qty-control">
+                          <button
+                            className="qty-control__btn"
+                            onClick={() => dispatch(decreaseQuantity(item.id))}
+                            aria-label="Decrease quantity"
+                          >
+                            −
+                          </button>
+                          <span className="qty-control__value">
+                            {item.quantity}
+                          </span>
+                          <button
+                            className="qty-control__btn"
+                            onClick={() => dispatch(increaseQuantity(item.id))}
+                            aria-label="Increase quantity"
+                          >
+                            +
+                          </button>
+                        </div>
+                        <button
+                          className="cart-item__remove"
+                          onClick={() => dispatch(removeFromCart(item.id))}
                         >
-                          {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(n => (
-                            <option key={n} value={n}>{n}</option>
-                          ))}
-                        </select>
+                          🗑 Remove
+                        </button>
                       </div>
-                      <span className="action-divider">|</span>
-                      <button className="text-action-btn" onClick={() => removeItem(item.id)}>Delete</button>
-                      <span className="action-divider">|</span>
-                      <button className="text-action-btn">Save for later</button>
+                    </div>
+
+                    {/* Item total */}
+                    <div className="cart-item__total">
+                      ₹{(item.price * item.quantity).toLocaleString('en-IN')}
                     </div>
                   </div>
-
-                  <div className="cart-item-row__price-col">
-                    <strong>${(item.price * item.quantity).toFixed(2)}</strong>
-                    {item.quantity > 1 && (
-                      <span className="item-unit-price">(${item.price} each)</span>
-                    )}
-                  </div>
                 </div>
-              ))}
-              
-              <div className="cart-footer-subtotal">
-                <span>Subtotal ({itemCount} items): </span>
-                <strong>${rawSubtotal.toFixed(2)}</strong>
               </div>
-            </div>
-          )}
-        </main>
+            ))}
+          </div>
 
-        {/* Right Column: Checkout Sidebar */}
-        {cartItems.length > 0 && (
-          <aside className="cart-checkout-sidebar">
-            {/* Free Shipping Alert */}
-            <div className="shipping-progress-box">
-              {rawSubtotal >= freeShippingLimit ? (
-                <p className="shipping-success">🎉 Your order qualifies for <strong>FREE Shipping</strong>.</p>
-              ) : (
-                <>
-                  <p className="shipping-need">Add <strong>${(freeShippingLimit - rawSubtotal).toFixed(2)}</strong> more for FREE Shipping.</p>
-                  <div className="progress-bar-bg">
-                    <div className="progress-bar-fill" style={{ width: `${progressPercent}%` }}></div>
-                  </div>
-                </>
-              )}
-            </div>
+          {/* Order Summary */}
+          <div className="cart-summary card">
+            <div className="card-body">
+              <h2 className="cart-summary__title">Order Summary</h2>
 
-            {/* Subtotal & CTA */}
-            <div className="checkout-summary-box">
-              <p className="checkout-subtotal">
-                Subtotal ({itemCount} items): <strong>${finalSubtotal}</strong>
-              </p>
-              {discount > 0 && (
-                <p className="discount-applied">Discount (10%): -${discountAmount.toFixed(2)}</p>
-              )}
-              <label className="gift-checkbox">
-                <input type="checkbox" /> This order contains a gift
-              </label>
-              
-              <button className="btn-amazon-primary checkout-btn-gold">
+              <div className="cart-summary__row">
+                <span>Subtotal ({totalItems} items)</span>
+                <span>₹{subtotal.toLocaleString('en-IN')}</span>
+              </div>
+
+              <div className="cart-summary__row">
+                <span>Shipping</span>
+                <span className="cart-summary__free">FREE</span>
+              </div>
+
+              <div className="cart-summary__row">
+                <span>Tax (18% GST)</span>
+                <span>
+                  ₹{Math.round(subtotal * 0.18).toLocaleString('en-IN')}
+                </span>
+              </div>
+
+              <hr className="cart-summary__divider" />
+
+              <div className="cart-summary__row cart-summary__row--total">
+                <span>Total</span>
+                <span>
+                  ₹
+                  {(subtotal + Math.round(subtotal * 0.18)).toLocaleString(
+                    'en-IN'
+                  )}
+                </span>
+              </div>
+
+              <button
+                className="cart-summary__checkout-btn btn w-100"
+                onClick={handleCheckout}
+              >
                 Proceed to Checkout
               </button>
-            </div>
 
-            {/* Promo Code Entry Form */}
-            <div className="promo-code-box">
-              <h4>Apply Promo Code</h4>
-              <form onSubmit={applyPromo} className="promo-form">
-                <input 
-                  type="text" 
-                  placeholder="Enter code" 
-                  value={promoCode} 
-                  onChange={(e) => setPromoCode(e.target.value)}
-                  className="promo-input"
-                />
-                <button type="submit" className="btn-amazon-secondary promo-btn">Apply</button>
-              </form>
-              {promoMessage && (
-                <p className={`promo-feedback ${discount > 0 ? 'success' : 'error'}`}>{promoMessage}</p>
-              )}
-              <span className="promo-tip">Tip: Try "SHOPSPHERE10" for 10% off.</span>
+              <Link to="/shop" className="cart-summary__continue">
+                ← Continue Shopping
+              </Link>
             </div>
-          </aside>
-        )}
-
+          </div>
+        </div>
       </div>
     </div>
   );

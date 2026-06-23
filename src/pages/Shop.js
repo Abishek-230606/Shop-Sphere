@@ -2,11 +2,15 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import ProductCard from '../components/productcard';
 import { fetchProducts } from '../api/product';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './shop.css';
+
+const PRODUCTS_PER_PAGE = 8;
 
 function Shop() {
   const [allProducts, setAllProducts] = useState([]);
   const [filtered, setFiltered] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchParams] = useSearchParams();
@@ -30,12 +34,11 @@ function Shop() {
       }
     }
     loadProducts();
-    return () => {
-      isMounted = false;
-    };
+    return () => { isMounted = false; };
   }, []);
 
   const filterProducts = useCallback(() => {
+    setCurrentPage(1);
     if (!searchQuery.trim()) {
       setFiltered(allProducts);
       return;
@@ -55,9 +58,18 @@ function Shop() {
     filterProducts();
   }, [filterProducts]);
 
+  const totalPages = Math.ceil(filtered.length / PRODUCTS_PER_PAGE);
+  const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
+  const currentProducts = filtered.slice(startIndex, startIndex + PRODUCTS_PER_PAGE);
+
+  function handlePageChange(page) {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
   return (
     <div className="shop-page">
-      {/* Page header */}
+      {/* Header */}
       <div className="shop-page__header">
         <p className="shop-page__header-label">Shop</p>
         <h1 className="shop-page__title">Discover Your Next Favourite Find</h1>
@@ -68,12 +80,12 @@ function Shop() {
 
       <div className="shop-page__content">
 
-        {/* Result count + active search tag */}
+        {/* Toolbar */}
         {!isLoading && !error && (
           <div className="shop-page__toolbar">
             {searchQuery && (
               <div className="shop-page__search-tag">
-                <span>Results for &quot;{searchQuery}&quot;</span>
+                Results for &quot;{searchQuery}&quot;
               </div>
             )}
             <p className="shop-page__count">
@@ -110,16 +122,62 @@ function Shop() {
         )}
 
         {/* Product grid */}
-        {!isLoading && !error && filtered.length > 0 && (
-          <div className="shop-page__grid">
-            {filtered.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                onAddToCart={() => {}}
-              />
-            ))}
-          </div>
+        {!isLoading && !error && currentProducts.length > 0 && (
+          <>
+            <div className="shop-page__grid">
+              {currentProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+
+            {/* Bootstrap Pagination */}
+            {totalPages > 1 && (
+              <div className="shop-page__pagination">
+                <nav aria-label="Product pagination">
+                  <ul className="pagination justify-content-center">
+                    <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                      <button
+                        className="page-link"
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        disabled={currentPage === 1}
+                      >
+                        &laquo; Prev
+                      </button>
+                    </li>
+
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                      (page) => (
+                        <li
+                          key={page}
+                          className={`page-item ${currentPage === page ? 'active' : ''}`}
+                        >
+                          <button
+                            className="page-link"
+                            onClick={() => handlePageChange(page)}
+                          >
+                            {page}
+                          </button>
+                        </li>
+                      )
+                    )}
+
+                    <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                      <button
+                        className="page-link"
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                      >
+                        Next &raquo;
+                      </button>
+                    </li>
+                  </ul>
+                </nav>
+                <p className="shop-page__page-info">
+                  Page {currentPage} of {totalPages}
+                </p>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>
