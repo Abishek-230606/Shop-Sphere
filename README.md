@@ -75,8 +75,8 @@ shopsphere/
    The application will automatically launch in your default browser at `http://localhost:3000`.
 
    There are 2 servers running backend for this project
-    -1 -> db.json this is connected via  http://localhost:5000
-    -2 -> customerdb.json this is connected via  http://localhost:5001
+    - 1 -> db.json this is connected via  http://localhost:5000
+    - 2 -> customerdb.json this is connected via  http://localhost:5001
 
 ## 📜 Available Scripts
 
