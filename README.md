@@ -122,7 +122,7 @@ brand
  - 2)Email 
  - 3)Phone
  - 4)Subject 
- - 5)Message 
+ - 5)Messages 
 
 ## 🛠️ Technologies Used
 
