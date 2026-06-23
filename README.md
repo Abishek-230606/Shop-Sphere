@@ -89,7 +89,6 @@ shopsphere/
 |------|-------------|--------|
 | **Home** | Premium landing page featuring dynamic carousels, custom trust indicators, and category cards. | ✅ Live |
 | **Shop** | Real-time mock API integration loading products with interactive search filters and cards. | ✅ Live |
-| **Returns & Orders** | Dashboard showing returns status, order records, and tracking history. | 🔜 Coming Soon |
 | **About** | Company profile, core values, statistics, and organizational history timeline. | ✅ Live |
 | **Contact** | Support contact information and FAQs. | 🔜 Coming Soon |
 | **Cart** | Cart management page displaying items, subtotals, and custom checkout flows. | 🔜 Coming Soon |
