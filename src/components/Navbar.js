@@ -28,15 +28,6 @@ function Navbar({ cartCount = 0 }) {
             <span className="brand-dot">.</span>
           </NavLink>
 
-          {/* Deliver to */}
-          <div className="site-navbar__deliver">
-            <span className="deliver-icon">📍</span>
-            <div>
-              <span className="deliver-top">Deliver to</span>
-              <span className="deliver-bottom">India</span>
-            </div>
-          </div>
-
           {/* Search */}
           <form className="site-navbar__search" onSubmit={handleSearch}>
             <div className="search-inner" style={{ position: 'relative' }}>
@@ -85,14 +76,6 @@ function Navbar({ cartCount = 0 }) {
 
           {/* Right actions */}
           <div className="site-navbar__actions">
-            <div className="nav-action">
-              <span className="nav-action__top">Hello, Sign in</span>
-              <span className="nav-action__bottom">Account &amp; Lists ▾</span>
-            </div>
-            <div className="nav-action">
-              <span className="nav-action__top">Returns</span>
-              <span className="nav-action__bottom">&amp; Orders</span>
-            </div>
             <NavLink to="/cart" className="mini-cart" aria-label="View cart">
               <span className="mini-cart__icon">🛒</span>
               <span className="mini-cart__count">{cartCount}</span>
@@ -107,16 +90,6 @@ function Navbar({ cartCount = 0 }) {
       <div className="site-navbar__bottom">
         <div className="site-navbar__bottom-inner">
           <ul className="site-navbar__links">
-            <li>
-              <NavLink
-                to="/shop"
-                className={({ isActive }) =>
-                  isActive ? 'site-navbar__link active' : 'site-navbar__link'
-                }
-              >
-                ☰ All
-              </NavLink>
-            </li>
             <li>
               <NavLink
                 to="/shop"
