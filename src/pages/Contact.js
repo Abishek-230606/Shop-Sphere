@@ -3,7 +3,7 @@ import { submitContactForm } from '../api/contact';
 import './StaticPage.css';
 
 function Contact() {
-  const [openFaq, setOpenFaq] = useState(null);
+  const [openFaqs, setOpenFaqs] = useState([]);
 
   // Form input values
   const [formValues, setFormValues] = useState({
@@ -46,7 +46,9 @@ function Contact() {
   ];
 
   const toggleFaq = (index) => {
-    setOpenFaq(prev => prev === index ? null : index);
+    setOpenFaqs(prev =>
+      prev.includes(index) ? prev.filter(item => item !== index) : [...prev, index]
+    );
   };
 
   const validateField = (name, value) => {
@@ -361,21 +363,27 @@ function Contact() {
       <section className="contact-faq-section full-width-faq">
         <h3>Frequently Asked Questions</h3>
         <div className="faq-accordion">
-          {faqs.map((faq, index) => (
-            <div 
-              className={`faq-node ${openFaq === index ? 'open' : ''}`} 
-              key={index}
-              onClick={() => toggleFaq(index)}
-            >
-              <div className="faq-question">
-                <span>{faq.q}</span>
-                <span className="faq-toggle-icon">{openFaq === index ? '▲' : '▼'}</span>
+          {faqs.map((faq, index) => {
+            const isOpen = openFaqs.includes(index);
+
+            return (
+              <div className={`faq-node ${isOpen ? 'open' : ''}`} key={index}>
+                <button
+                  type="button"
+                  className="faq-question"
+                  onClick={() => toggleFaq(index)}
+                  aria-expanded={isOpen}
+                  aria-controls={`faq-answer-${index}`}
+                >
+                  <span>{faq.q}</span>
+                  <span className="faq-toggle-icon">{isOpen ? '▲' : '▼'}</span>
+                </button>
+                <div id={`faq-answer-${index}`} className="faq-answer">
+                  <p>{faq.a}</p>
+                </div>
               </div>
-              <div className="faq-answer">
-                <p>{faq.a}</p>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
     </div>

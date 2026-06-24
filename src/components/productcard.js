@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../features/cart/cartslice';
@@ -7,6 +7,11 @@ import './productcard.css';
 function ProductCard({ product }) {
   const dispatch = useDispatch();
   const [added, setAdded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+
+  useEffect(() => {
+    setImageError(false);
+  }, [product?.id, product?.image]);
 
   function handleAddToCart() {
     dispatch(addToCart(product));
@@ -21,12 +26,20 @@ function ProductCard({ product }) {
   return (
     <div className="product-card">
       <div className="product-card__image-wrapper">
-        <img
-          src={product.image}
-          alt={product.product_name}
-          className="product-card__image"
-          loading="lazy"
-        />
+        {imageError || !product.image ? (
+          <div className="product-card__placeholder">
+            <span className="product-card__placeholder-icon">🖼️</span>
+            <span className="product-card__placeholder-text">Image Unavailable</span>
+          </div>
+        ) : (
+          <img
+            src={product.image}
+            alt={product.product_name}
+            className="product-card__image"
+            loading="lazy"
+            onError={() => setImageError(true)}
+          />
+        )}
       </div>
       <div className="product-card__body">
         <span className="product-card__brand">{product.brand}</span>
