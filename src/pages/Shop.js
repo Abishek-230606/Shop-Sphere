@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { AlertTriangle, Search } from 'lucide-react';
 import ProductCard from '../components/productcard';
 import { fetchProducts } from '../api/product';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -8,13 +9,21 @@ import './shop.css';
 const PRODUCTS_PER_PAGE = 8;
 
 function Shop() {
-  const [allProducts, setAllProducts] = useState([]);
-  const [filtered, setFiltered] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get('search') || '';
+
+  // Track the previous search query to reset the page to 1 when search changes
+  const [prevSearchQuery, setPrevSearchQuery] = useState(searchQuery);
+
+  if (searchQuery !== prevSearchQuery) {
+    setPrevSearchQuery(searchQuery);
+    setCurrentPage(1);
+  }
 
   useEffect(() => {
     let isMounted = true;
@@ -22,8 +31,15 @@ function Shop() {
       try {
         setIsLoading(true);
         setError(null);
-        const data = await fetchProducts();
-        if (isMounted) setAllProducts(data);
+        const data = await fetchProducts({
+          page: currentPage,
+          limit: PRODUCTS_PER_PAGE,
+          search: searchQuery,
+        });
+        if (isMounted) {
+          setProducts(data.products);
+          setTotalCount(data.totalCount);
+        }
       } catch (err) {
         if (isMounted)
           setError(
@@ -35,32 +51,9 @@ function Shop() {
     }
     loadProducts();
     return () => { isMounted = false; };
-  }, []);
+  }, [currentPage, searchQuery]);
 
-  const filterProducts = useCallback(() => {
-    setCurrentPage(1);
-    if (!searchQuery.trim()) {
-      setFiltered(allProducts);
-      return;
-    }
-    const q = searchQuery.toLowerCase();
-    setFiltered(
-      allProducts.filter(
-        (p) =>
-          p.product_name.toLowerCase().includes(q) ||
-          p.brand.toLowerCase().includes(q) ||
-          p.description.toLowerCase().includes(q)
-      )
-    );
-  }, [allProducts, searchQuery]);
-
-  useEffect(() => {
-    filterProducts();
-  }, [filterProducts]);
-
-  const totalPages = Math.ceil(filtered.length / PRODUCTS_PER_PAGE);
-  const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
-  const currentProducts = filtered.slice(startIndex, startIndex + PRODUCTS_PER_PAGE);
+  const totalPages = Math.ceil(totalCount / PRODUCTS_PER_PAGE);
 
   function handlePageChange(page) {
     setCurrentPage(page);
@@ -89,9 +82,9 @@ function Shop() {
               </div>
             )}
             <p className="shop-page__count">
-              {filtered.length === allProducts.length
-                ? `${allProducts.length} products`
-                : `${filtered.length} of ${allProducts.length} products`}
+              {searchQuery
+                ? `Found ${totalCount} product${totalCount === 1 ? '' : 's'} for "${searchQuery}"`
+                : `${totalCount} product${totalCount === 1 ? '' : 's'}`}
             </p>
           </div>
         )}
@@ -107,25 +100,25 @@ function Shop() {
         {/* Error */}
         {error && !isLoading && (
           <div className="shop-page__error">
-            <span>⚠️</span>
+            <AlertTriangle size={24} className="text-danger mb-2" />
             <p>{error}</p>
             <button onClick={() => window.location.reload()}>Try Again</button>
           </div>
         )}
 
         {/* No results */}
-        {!isLoading && !error && filtered.length === 0 && (
+        {!isLoading && !error && products.length === 0 && (
           <div className="shop-page__empty">
-            <span>🔍</span>
+            <Search size={48} className="text-muted mb-3" />
             <p>No products found for &quot;{searchQuery}&quot;</p>
           </div>
         )}
 
         {/* Product grid */}
-        {!isLoading && !error && currentProducts.length > 0 && (
+        {!isLoading && !error && products.length > 0 && (
           <>
             <div className="shop-page__grid">
-              {currentProducts.map((product) => (
+              {products.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
             </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Heart, Zap, Lightbulb, Star } from 'lucide-react';
 import './StaticPage.css';
 
 function About() {
@@ -48,17 +49,17 @@ function About() {
         <h3>Our Core Values</h3>
         <div className="values-grid">
           <div className="value-item">
-            <span className="value-icon">❤️</span>
+            <span className="value-icon"><Heart size={32} className="text-danger" /></span>
             <h4>Customer Obsession</h4>
             <p>We start with the customer and work backwards to earn and maintain their trust.</p>
           </div>
           <div className="value-item">
-            <span className="value-icon">⚡</span>
+            <span className="value-icon"><Zap size={32} className="text-warning" /></span>
             <h4>Deliver Speed</h4>
             <p>We value quick processing times and rapid resolutions to customer inquiries.</p>
           </div>
           <div className="value-item">
-            <span className="value-icon">💡</span>
+            <span className="value-icon"><Lightbulb size={32} className="text-info" /></span>
             <h4>Innovate Daily</h4>
             <p>We constantly seek improvements in our search tools, grids, and user interfaces.</p>
           </div>
@@ -72,21 +73,33 @@ function About() {
         
         <div className="reviews-grid">
           <div className="review-card">
-            <div className="review-rating">⭐⭐⭐⭐⭐</div>
+            <div className="review-rating">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} size={16} fill="#ffc107" stroke="#ffc107" className="me-1" />
+              ))}
+            </div>
             <p className="review-text">
               &quot;ShopSphere has completely changed how we procure products. The shipping is lightning fast and the customer support is top-notch!&quot;
             </p>
             <div className="review-author">— Ananya Sharma, Satisfied Customer</div>
           </div>
           <div className="review-card">
-            <div className="review-rating">⭐⭐⭐⭐⭐</div>
+            <div className="review-rating">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} size={16} fill="#ffc107" stroke="#ffc107" className="me-1" />
+              ))}
+            </div>
             <p className="review-text">
               &quot;As a vendor, selling on ShopSphere has been incredibly smooth. The merchant support team and payment clearances are always on time.&quot;
             </p>
             <div className="review-author">— Rajesh Patel, Gold Partner Vendor</div>
           </div>
           <div className="review-card">
-            <div className="review-rating">⭐⭐⭐⭐⭐</div>
+            <div className="review-rating">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} size={16} fill="#ffc107" stroke="#ffc107" className="me-1" />
+              ))}
+            </div>
             <p className="review-text">
               &quot;Excellent product quality! I ordered a mechanical keyboard and it was delivered within 2 days in mint condition. 10/10 recommended.&quot;
             </p>

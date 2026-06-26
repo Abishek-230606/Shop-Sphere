@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Package, Lock, ShieldCheck, UserCheck } from 'lucide-react';
 import './Home.css';
 
 function Home() {
@@ -123,28 +124,36 @@ function Home() {
       {/* Trust Indicators Banner */}
       <section className="home-trust-banners">
         <div className="trust-card">
-          <div className="trust-card__icon">📦</div>
+          <div className="trust-card__icon">
+            <Package size={28} />
+          </div>
           <div className="trust-card__text">
             <h4>Complimentary Shipping</h4>
             <p>Free express delivery on all premium orders exceeding $100.</p>
           </div>
         </div>
         <div className="trust-card">
-          <div className="trust-card__icon">🔒</div>
+          <div className="trust-card__icon">
+            <Lock size={28} />
+          </div>
           <div className="trust-card__text">
             <h4>Encrypted Checkout</h4>
             <p>Secure SSL standards to safeguard payment information.</p>
           </div>
         </div>
         <div className="trust-card">
-          <div className="trust-card__icon">🌿</div>
+          <div className="trust-card__icon">
+            <ShieldCheck size={28} />
+          </div>
           <div className="trust-card__text">
             <h4>30-Day Guarantee</h4>
             <p>Frictionless return solutions for absolute peace of mind.</p>
           </div>
         </div>
         <div className="trust-card">
-          <div className="trust-card__icon">👤</div>
+          <div className="trust-card__icon">
+            <UserCheck size={28} />
+          </div>
           <div className="trust-card__text">
             <h4>Curated Service</h4>
             <p>Inquiries resolved swiftly by our dedicated customer team.</p>
