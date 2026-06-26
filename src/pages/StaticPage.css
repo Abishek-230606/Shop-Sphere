@@ -761,10 +761,20 @@ textarea.form-input {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
   padding: 1rem 1.25rem;
   font-weight: 700;
   font-size: 0.9rem;
   color: var(--primary-brand);
+  text-align: left;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.faq-question:focus-visible {
+  outline: 2px solid var(--primary-brand);
+  outline-offset: -2px;
 }
 
 .faq-toggle-icon {
@@ -773,6 +783,7 @@ textarea.form-input {
 }
 
 .faq-answer {
+  display: none;
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.2s ease-out, padding 0.2s ease-out;
@@ -780,7 +791,8 @@ textarea.form-input {
 }
 
 .faq-node.open .faq-answer {
-  max-height: 120px;
+  display: block;
+  max-height: 180px;
   padding: 1rem 1.25rem;
   border-top: 1px solid var(--border-color);
 }

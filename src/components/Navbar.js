@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Search, ShoppingCart } from 'lucide-react';
 import './Navbar.css';
 
 function Navbar() {
@@ -60,7 +61,7 @@ function Navbar() {
                 </button>
               )}
               <button type="submit" className="search-btn" aria-label="Search">
-                🔍
+                <Search size={18} />
               </button>
             </div>
           </form>
@@ -68,7 +69,9 @@ function Navbar() {
           {/* Right actions */}
           <div className="site-navbar__actions">
             <NavLink to="/cart" className="mini-cart" aria-label="View cart">
-              <span className="mini-cart__icon">🛒</span>
+              <span className="mini-cart__icon">
+                <ShoppingCart size={18} />
+              </span>
               <span className="mini-cart__count">{cartCount}</span>
               <span className="mini-cart__label">Cart</span>
             </NavLink>

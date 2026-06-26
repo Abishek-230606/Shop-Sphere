@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { ShoppingCart, Trash2 } from 'lucide-react';
 import {
   increaseQuantity,
   decreaseQuantity,
@@ -25,7 +26,7 @@ function Cart() {
 
   function handleCheckout() {
     alert(
-      `✅ Order placed successfully!\n\nThank you for shopping with ShopSphere.\nYour order of ₹${subtotal.toLocaleString('en-IN')} will be delivered soon.`
+      `Order placed successfully!\n\nThank you for shopping with ShopSphere.\nYour order of ₹${subtotal.toLocaleString('en-IN')} will be delivered soon.`
     );
     dispatch(clearCart());
   }
@@ -33,7 +34,7 @@ function Cart() {
   if (cartItems.length === 0) {
     return (
       <div className="cart-empty">
-        <div className="cart-empty__icon">🛒</div>
+        <ShoppingCart size={64} className="cart-empty__icon mb-3 text-muted" />
         <h2>Your Cart is Empty</h2>
         <p>Looks like you haven't added anything yet.</p>
         <Link to="/shop" className="cart-empty__btn">
@@ -49,9 +50,9 @@ function Cart() {
 
         {/* Header */}
         <div className="cart-page__header">
-          <h1>
-            🛒 Your Cart{' '}
-            <span className="cart-page__count">
+          <h1 className="d-flex align-items-center">
+            <ShoppingCart size={28} className="me-2" /> Your Cart{' '}
+            <span className="cart-page__count ms-2">
               {totalItems} {totalItems === 1 ? 'item' : 'items'}
             </span>
           </h1>
@@ -107,7 +108,7 @@ function Cart() {
                           className="cart-item__remove"
                           onClick={() => dispatch(removeFromCart(item.id))}
                         >
-                          🗑 Remove
+                          <Trash2 size={16} className="me-1" /> Remove
                         </button>
                       </div>
                     </div>

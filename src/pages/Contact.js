@@ -1,30 +1,53 @@
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { Check, AlertTriangle, Phone, Mail, MapPin, ChevronUp, ChevronDown } from 'lucide-react';
 import { submitContactForm } from '../api/contact';
 import './StaticPage.css';
 
+// Define validation schema restricting name field to letters (A-Z, a-z) and spaces
+const contactSchema = z.object({
+  name: z.string()
+    .min(1, 'Name is required')
+    .min(2, 'Name must be at least 2 characters')
+    .regex(/^[a-zA-Z\s]+$/, 'Name must only contain letters and spaces'),
+  email: z.string()
+    .min(1, 'Email is required')
+    .email('Please enter a valid email address'),
+  phone: z.string().optional().refine(
+    (val) => !val || /^[0-9+\s\-()]{7,15}$/.test(val),
+    { message: 'Please enter a valid phone number (7-15 digits)' }
+  ),
+  subject: z.string()
+    .min(1, 'Subject is required')
+    .min(4, 'Subject must be at least 4 characters'),
+  message: z.string()
+    .min(1, 'Message is required')
+    .min(10, 'Message must be at least 10 characters'),
+});
+
 function Contact() {
-  const [openFaq, setOpenFaq] = useState(null);
-
-  // Form input values
-  const [formValues, setFormValues] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: ''
-  });
-
-  // Validation errors
-  const [errors, setErrors] = useState({});
-
-  // Field touched state (so errors show only after user interacts)
-  const [touched, setTouched] = useState({});
-
-  // Submission state
-  const [loading, setLoading] = useState(false);
+  const [openFaqs, setOpenFaqs] = useState([]);
   const [success, setSuccess] = useState(false);
   const [submitError, setSubmitError] = useState('');
   const [ticketNumber, setTicketNumber] = useState('');
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting, touchedFields }
+  } = useForm({
+    resolver: zodResolver(contactSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      phone: '',
+      subject: '',
+      message: ''
+    }
+  });
 
   const faqs = [
     {
@@ -46,102 +69,17 @@ function Contact() {
   ];
 
   const toggleFaq = (index) => {
-    setOpenFaq(prev => prev === index ? null : index);
+    setOpenFaqs(prev =>
+      prev.includes(index) ? prev.filter(item => item !== index) : [...prev, index]
+    );
   };
 
-  const validateField = (name, value) => {
-    let error = '';
-    switch (name) {
-      case 'name':
-        if (!value.trim()) {
-          error = 'Name is required';
-        } else if (!/^[a-zA-Z\s]+$/.test(value)) {
-          error = 'Name can only contain letters and spaces';
-        } else if (value.trim().length < 2) {
-          error = 'Name must be at least 2 characters';
-        }
-        break;
-      case 'email':
-        if (!value.trim()) {
-          error = 'Email is required';
-        } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)) {
-          error = 'Please enter a valid email address';
-        }
-        break;
-      case 'phone':
-        if (value.trim() && !/^[0-9+\s\-()]{7,15}$/.test(value)) {
-          error = 'Please enter a valid phone number (7-15 digits)';
-        }
-        break;
-      case 'subject':
-        if (!value.trim()) {
-          error = 'Subject is required';
-        } else if (value.trim().length < 4) {
-          error = 'Subject must be at least 4 characters';
-        }
-        break;
-      case 'message':
-        if (!value.trim()) {
-          error = 'Message is required';
-        } else if (value.trim().length < 10) {
-          error = 'Message must be at least 10 characters';
-        }
-        break;
-      default:
-        break;
-    }
-    return error;
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormValues(prev => ({ ...prev, [name]: value }));
-    
-    if (touched[name]) {
-      const error = validateField(name, value);
-      setErrors(prev => ({ ...prev, [name]: error }));
-    }
-  };
-
-  const handleBlur = (e) => {
-    const { name, value } = e.target;
-    setTouched(prev => ({ ...prev, [name]: true }));
-    const error = validateField(name, value);
-    setErrors(prev => ({ ...prev, [name]: error }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    // Mark all fields as touched
-    const allTouched = Object.keys(formValues).reduce((acc, key) => {
-      acc[key] = true;
-      return acc;
-    }, {});
-    setTouched(allTouched);
-
-    // Validate all fields
-    const newErrors = {};
-    Object.keys(formValues).forEach(key => {
-      const error = validateField(key, formValues[key]);
-      if (error) {
-        newErrors[key] = error;
-      }
-    });
-
-    setErrors(newErrors);
-
-    // If there are errors, block submission
-    if (Object.keys(newErrors).length > 0) {
-      return;
-    }
-
-    setLoading(true);
+  const onSubmit = async (data) => {
     setSubmitError('');
     setSuccess(false);
 
     try {
-      await submitContactForm(formValues);
+      await submitContactForm(data);
       
       // Generate a random ticket ID
       const randomTicket = 'SSP-' + Math.floor(100000 + Math.random() * 900000);
@@ -149,25 +87,15 @@ function Contact() {
       setSuccess(true);
 
       // Reset form
-      setFormValues({
-        name: '',
-        email: '',
-        phone: '',
-        subject: '',
-        message: ''
-      });
-      setTouched({});
-      setErrors({});
+      reset();
     } catch (err) {
       setSubmitError('Failed to send message. Please ensure the contact database server is running.');
       console.error(err);
-    } finally {
-      setLoading(false);
     }
   };
 
   const getValidationClass = (fieldName) => {
-    if (!touched[fieldName]) return '';
+    if (!touchedFields[fieldName]) return '';
     return errors[fieldName] ? 'is-invalid' : 'is-valid';
   };
 
@@ -183,7 +111,9 @@ function Contact() {
 
           {success && (
             <div className="contact-success-banner">
-              <div className="success-banner-icon">✓</div>
+              <div className="success-banner-icon">
+                <Check size={20} strokeWidth={3} />
+              </div>
               <h4>Message Sent Successfully!</h4>
               <p>Thank you for reaching out. We will get back to you within 24 hours.</p>
               <div>
@@ -194,11 +124,11 @@ function Contact() {
 
           {submitError && (
             <div className="contact-error-banner">
-              ⚠️ {submitError}
+              <AlertTriangle className="me-2" size={18} /> {submitError}
             </div>
           )}
 
-          <form onSubmit={handleSubmit} noValidate>
+          <form onSubmit={handleSubmit(onSubmit)} noValidate>
             {/* Name & Email Row */}
             <div className="form-row-2">
               <div className="form-group">
@@ -209,17 +139,13 @@ function Contact() {
                   <input
                     type="text"
                     id="name"
-                    name="name"
                     className={`form-input ${getValidationClass('name')}`}
                     placeholder="Your Name"
-                    value={formValues.name}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    required
+                    {...register('name')}
                   />
                 </div>
-                {touched.name && errors.name && (
-                  <span className="error-message">{errors.name}</span>
+                {errors.name && (
+                  <span className="error-message">{errors.name.message}</span>
                 )}
               </div>
 
@@ -231,17 +157,13 @@ function Contact() {
                   <input
                     type="email"
                     id="email"
-                    name="email"
                     className={`form-input ${getValidationClass('email')}`}
                     placeholder="name@example.com"
-                    value={formValues.email}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    required
+                    {...register('email')}
                   />
                 </div>
-                {touched.email && errors.email && (
-                  <span className="error-message">{errors.email}</span>
+                {errors.email && (
+                  <span className="error-message">{errors.email.message}</span>
                 )}
               </div>
             </div>
@@ -256,16 +178,13 @@ function Contact() {
                   <input
                     type="tel"
                     id="phone"
-                    name="phone"
                     className={`form-input ${getValidationClass('phone')}`}
                     placeholder="e.g. +1 (555) 000-0000 (Optional)"
-                    value={formValues.phone}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
+                    {...register('phone')}
                   />
                 </div>
-                {touched.phone && errors.phone && (
-                  <span className="error-message">{errors.phone}</span>
+                {errors.phone && (
+                  <span className="error-message">{errors.phone.message}</span>
                 )}
               </div>
 
@@ -277,17 +196,13 @@ function Contact() {
                   <input
                     type="text"
                     id="subject"
-                    name="subject"
                     className={`form-input ${getValidationClass('subject')}`}
                     placeholder="How can we help you?"
-                    value={formValues.subject}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    required
+                    {...register('subject')}
                   />
                 </div>
-                {touched.subject && errors.subject && (
-                  <span className="error-message">{errors.subject}</span>
+                {errors.subject && (
+                  <span className="error-message">{errors.subject.message}</span>
                 )}
               </div>
             </div>
@@ -300,17 +215,13 @@ function Contact() {
               <div className="form-input-wrapper">
                 <textarea
                   id="message"
-                  name="message"
                   className={`form-input ${getValidationClass('message')}`}
                   placeholder="Describe your inquiry in detail..."
-                  value={formValues.message}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  required
+                  {...register('message')}
                 />
               </div>
-              {touched.message && errors.message && (
-                <span className="error-message">{errors.message}</span>
+              {errors.message && (
+                <span className="error-message">{errors.message.message}</span>
               )}
             </div>
 
@@ -318,9 +229,9 @@ function Contact() {
             <button
               type="submit"
               className="btn-premium-primary contact-submit-btn"
-              disabled={loading}
+              disabled={isSubmitting}
             >
-              {loading ? (
+              {isSubmitting ? (
                 <>
                   <span className="btn-spinner" role="status" aria-hidden="true" />
                   Sending Message...
@@ -335,21 +246,27 @@ function Contact() {
         {/* Support Sidebar Info Column */}
         <div className="contact-sidebar">
           <div className="support-card helpline-card">
-            <div className="support-card__icon">📞</div>
+            <div className="support-card__icon">
+              <Phone size={24} />
+            </div>
             <h4>Helpline Number</h4>
             <p className="support-details">1800 001 001</p>
             <p className="support-hours">Toll-free, 24/7 client helpline</p>
           </div>
 
           <div className="support-card">
-            <div className="support-card__icon">✉️</div>
+            <div className="support-card__icon">
+              <Mail size={24} />
+            </div>
             <h4>Email Support</h4>
             <p className="support-details">support@shopsphere.com</p>
             <p className="support-hours">Response within 24 hours</p>
           </div>
 
           <div className="support-card">
-            <div className="support-card__icon">📍</div>
+            <div className="support-card__icon">
+              <MapPin size={24} />
+            </div>
             <h4>Corporate Headquarters</h4>
             <p className="support-details">ShopSphere Plaza, Tech City</p>
             <p className="support-hours">Mon - Fri, 9am - 6pm</p>
@@ -361,21 +278,29 @@ function Contact() {
       <section className="contact-faq-section full-width-faq">
         <h3>Frequently Asked Questions</h3>
         <div className="faq-accordion">
-          {faqs.map((faq, index) => (
-            <div 
-              className={`faq-node ${openFaq === index ? 'open' : ''}`} 
-              key={index}
-              onClick={() => toggleFaq(index)}
-            >
-              <div className="faq-question">
-                <span>{faq.q}</span>
-                <span className="faq-toggle-icon">{openFaq === index ? '▲' : '▼'}</span>
+          {faqs.map((faq, index) => {
+            const isOpen = openFaqs.includes(index);
+
+            return (
+              <div className={`faq-node ${isOpen ? 'open' : ''}`} key={index}>
+                <button
+                  type="button"
+                  className="faq-question"
+                  onClick={() => toggleFaq(index)}
+                  aria-expanded={isOpen}
+                  aria-controls={`faq-answer-${index}`}
+                >
+                  <span>{faq.q}</span>
+                  <span className="faq-toggle-icon">
+                    {isOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                  </span>
+                </button>
+                <div id={`faq-answer-${index}`} className="faq-answer">
+                  <p>{faq.a}</p>
+                </div>
               </div>
-              <div className="faq-answer">
-                <p>{faq.a}</p>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
     </div>
