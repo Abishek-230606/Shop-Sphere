@@ -1,14 +1,7 @@
-import axios from 'axios';
-
-const contactApiClient = axios.create({
-  baseURL: process.env.REACT_APP_CONTACT_API_BASE_URL || 'http://localhost:5001',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+import apiClient from './client';
 
 export async function submitContactForm(contactData) {
-  const response = await contactApiClient.post('/contacts', {
+  const response = await apiClient.post('/contacts', {
     ...contactData,
     submittedAt: new Date().toISOString(),
   });
